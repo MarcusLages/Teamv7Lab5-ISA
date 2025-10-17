@@ -1,0 +1,44 @@
+/* Center everything vertically and horizontally */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; 
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f9f9f9; 
+}
+
+/* Headings */
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Textarea for SQL queries */
+#sql_query {
+    width: 500px;      
+    height: 150px;      
+    font-size: 14px;
+    font-family: monospace;
+    resize: vertical;
+    margin-bottom: 10px;
+}
+
+/* Server response box */
+#server_response {
+    width: 500px;
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
