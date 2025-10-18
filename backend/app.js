@@ -39,29 +39,64 @@ class App {
 
         switch (req.method) {
             case "GET":
-                if (req_url.pathname.includes(App.QUERY_ROUTE)) {
-                    const query = req_url.searchParams.get(App.QUERY_PARAM);
-                    try {    
-                        const data = await this.db.selectQuery(query);
-                        if(data.query) {
-                            Response.successRes(res, data)
-                        } else if(data.err_code === Response.FORBIDDEN_CODE) {
-                            Response.forbiddenError(res, data.err_msg);
-                        } else {
-                            Response.badReqError(res, data.err_msg);
-                        }
-                    } catch(err) {
-                        Response.serverError(res, MSGS.DATABASE_ERR);
-                    }
-                } else {
-                    Response.notFoundError(res);
-                }
+                await this.handleQueryGet(req_url, res);
                 break;
             case "POST":
+                await this.handleQueryPost(req_url, req, res);
                 break;
             default:
                 Response.notFoundError(res);
                 break;
+        }
+    }
+
+    async handleQueryGet(req_url, res) {
+        if (req_url.pathname.includes(App.QUERY_ROUTE)) {
+            const query = req_url.searchParams.get(App.QUERY_PARAM);
+            // Would be good to abstract this if we had more query types
+            try {
+                const data = await this.db.selectQuery(query);
+                if (data.query) {
+                    Response.successRes(res, data);
+                } else if (data.err_code === Response.FORBIDDEN_CODE) {
+                    Response.forbiddenError(res, data.err_msg);
+                } else {
+                    Response.badReqError(res, data.err_msg);
+                }
+            } catch (err) {
+                Response.serverError(res, MSGS.DATABASE_ERR);
+            }
+        } else {
+            Response.notFoundError(res);
+        }
+    }
+
+    async handleQueryPost(req_url, req, res) {
+        if (req_url.pathname.includes(App.DEFINITION_ROUTE)) {
+            let body_str = "";
+            req.on("data", chunk => { body_str += chunk; });
+            req.on("end", async () => {
+                try {
+                    const body = JSON.parse(body_str);
+                    const query = body.query;
+                    try {
+                        const data = await this.db.insertQuery(query);
+                        if (data.query) {
+                            Response.successRes(res, data);
+                        } else if (data.err_code === Response.FORBIDDEN_CODE) {
+                            Response.forbiddenError(res, data.err_msg);
+                        } else {
+                            Response.badReqError(res, data.err_msg);
+                        }
+                    } catch (err) {
+                        Response.serverError(res, MSGS.DATABASE_ERR);
+                    }
+                } catch (err) {
+                    Response.badReqError(res);
+                }
+            });
+        } else {
+            Response.notFoundError(res);
         }
     }
 
