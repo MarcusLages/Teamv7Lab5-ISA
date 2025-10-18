@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/MarcusLages/Teamv7Lab5-ISA#readme",
   "dependencies": {
-    "mysql2": "^3.15.2"
+    "mysql2": "^3.15.2",
+    "node-sql-parser": "^5.3.13"
   }
 }
