@@ -1,6 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
+  "type": "module",
   "description": "API for patient database",
   "main": "app.js",
   "scripts": {

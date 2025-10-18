@@ -1,7 +1,8 @@
 import mysql from "mysql2/promise.js";
-import { Parser } from "node-sql-parser";
+import parser from "node-sql-parser";
+const { Parser } = parser;
 import { Response } from "./response.js";
-import { MSGS } from "../lang/messages/en/user";
+import { MSGS } from "../lang/messages/en/user.js";
 
 export class PatientDB {
     static PATIENTS_TABLE = "Patients";

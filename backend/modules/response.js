@@ -1,4 +1,4 @@
-const { MSGS } = require("../lang/messages/en/user.js")
+const { MSGS } = require("../lang/messages/en/user.js");
 
 exports.Response = class Response {
     
