@@ -3,6 +3,12 @@ const { MSGS } = require("../lang/messages/en/user.js")
 exports.Response = class Response {
     
     static RES_CONTENT_TYPE = "application/json";
+    static DEFAULT_SUCC_CODE = 200;
+    static CREATED_CODE = 201;
+    static DEFAULT_ERR_CODE = 400;
+    static BAD_REQ_CODE = 402;
+    static NOT_FOUND_CODE = 404;
+    static FORBIDDEN_CODE = 403;
     
     static sendResponse(res, data, code) {
         res.writeHead(code, { "Content-Type": this.RES_CONTENT_TYPE });
@@ -12,20 +18,20 @@ exports.Response = class Response {
     static successRes(res, data, code) {
         const res_data = {
             status: "success",
-            code: code || 200,
+            code: code || this.DEFAULT_SUCC_CODE,
             data: data
         };
         this.sendResponse(res, res_data, res_data.code);
     }
 
     static createdRes(res, data) {
-        this.successRes(res, data, 201);
+        this.successRes(res, data, this.CREATED_CODE);
     }
 
     static errorRes(res, err_msg, err_code) {
         const res_data = {
             status: "error",
-            code: err_code || 400,
+            code: err_code || this.DEFAULT_ERR_CODE,
             data: err_msg
         };
         this.sendResponse(res, res_data, res_data.code);
@@ -35,7 +41,7 @@ exports.Response = class Response {
         this.errorRes(
             res,
             err_msg || MSGS.DEFAULT_BAD_REQ_ERR,
-            402
+            this.BAD_REQ_CODE
         );
     }
     
@@ -43,7 +49,7 @@ exports.Response = class Response {
         this.errorRes(
             res,
             err_msg || MSGS.DEFAULT_NOT_FOUND_ERR,
-            404
+            this.NOT_FOUND_CODE
         );
     }
 
@@ -51,7 +57,7 @@ exports.Response = class Response {
         this.errorRes(
             res,
             err_msg || MSGS.DEFAULT_FORBIDDEN_ERR,
-            403
+            this.FORBIDDEN_CODE
         )
     }
 }
