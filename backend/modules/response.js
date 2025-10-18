@@ -9,6 +9,7 @@ exports.Response = class Response {
     static BAD_REQ_CODE = 402;
     static NOT_FOUND_CODE = 404;
     static FORBIDDEN_CODE = 403;
+    static DEFAULT_INT_SERVER_CODE = 500;
     
     static sendResponse(res, data, code) {
         res.writeHead(code, { "Content-Type": this.RES_CONTENT_TYPE });
@@ -58,6 +59,14 @@ exports.Response = class Response {
             res,
             err_msg || MSGS.DEFAULT_FORBIDDEN_ERR,
             this.FORBIDDEN_CODE
+        )
+    }
+
+    static serverError(res, err_msg) {
+        this.errorRes(
+            res,
+            err_msg || MSGS.DEFAULT_INT_SERVER_ERR,
+            this.DEFAULT_INT_SERVER_CODE
         )
     }
 }

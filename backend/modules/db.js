@@ -3,7 +3,7 @@ import { Parser } from "node-sql-parser";
 import { Response } from "./response.js";
 import { MSGS } from "../lang/messages/en/user";
 
-class PatientDB {
+export class PatientDB {
     static PATIENTS_TABLE = "Patients";
     static PATIENTS_SCHEMA = `
         patientId INT AUTO_INCREMENT PRIMARY KEY,
@@ -59,6 +59,8 @@ class PatientDB {
     }
 
     // ! Can throw Errors related to the database
+    // Can return { err_code, err_msg } or { query, result }
+    // Errors can be BadRequest or Forbidden
     async selectQuery(query) {
         const val_query = this.validateQuery(query, "SELECT");
         if(val_query.err_code) return val_query;
@@ -71,6 +73,8 @@ class PatientDB {
     }
 
     // ! Can throw Errors related to the database
+    // Can return { err_code, err_msg } or { query }
+    // Errors can be BadRequest or Forbidden
     async insertQuery(query) {
         const val_query = this.validateQuery(query, "INSERT");
         if(val_query.err_code) return val_query;
@@ -81,5 +85,3 @@ class PatientDB {
         return val_query;
     }
 }
-
-export default new PatientDB();
