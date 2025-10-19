@@ -8,8 +8,8 @@ export class PatientDB {
     static PATIENTS_TABLE = "Patients";
     static PATIENTS_SCHEMA = `
         patientId INT AUTO_INCREMENT PRIMARY KEY,
-        name: VARCHAR(100) NOT NULL,
-        dateOfBirth: DATETIME
+        name VARCHAR(100) NOT NULL,
+        dateOfBirth DATETIME
     `;
     static STARTING_QUERY = `
         CREATE TABLE IF NOT EXISTS ${this.PATIENTS_TABLE} (
@@ -29,7 +29,7 @@ export class PatientDB {
 
     async init() {
         const con = await this.pool.getConnection();
-        await con.query(DB.STARTING_QUERY);
+        await con.query(PatientDB.STARTING_QUERY);
 
         // Close the connection
         con.release();
@@ -41,7 +41,14 @@ export class PatientDB {
             // Abstract Syntax Tree of the query
             // astify throws error if invalid query
             const ast = this.parser.astify(query);
-            const query_type = ast.type?.toUpperCase();
+
+            // astify can return object or array (why????)
+            // If array, the first item is the first instruction
+            let query_type;
+            if(Array.isArray(ast))
+                query_type = ast[0].type?.toUpperCase();
+            else
+                query_type = ast.type?.toUpperCase();
 
             if(query_type !== allowed_type.toUpperCase()) {
                 return {

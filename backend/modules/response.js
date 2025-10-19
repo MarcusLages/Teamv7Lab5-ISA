@@ -1,6 +1,6 @@
-const { MSGS } = require("../lang/messages/en/user.js");
+import { MSGS } from "../lang/messages/en/user.js";
 
-exports.Response = class Response {
+export class Response {
     
     static RES_CONTENT_TYPE = "application/json";
     static DEFAULT_SUCC_CODE = 200;

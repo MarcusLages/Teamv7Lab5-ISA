@@ -72,7 +72,7 @@ class App {
     }
 
     async handleQueryPost(req_url, req, res) {
-        if (req_url.pathname.includes(App.DEFINITION_ROUTE)) {
+        if (req_url.pathname.includes(App.QUERY_ROUTE)) {
             let body_str = "";
             req.on("data", chunk => { body_str += chunk; });
             req.on("end", async () => {
