@@ -22,7 +22,7 @@ Route used to send an INSERT query to the backend.
 - Req body:
 ```json
 {
-    "query": "INSERT INTO Patients
+    "query": "INSERT INTO Patients (name, dateOfBirth)
               VALUES('Jane Doe', '1999-01-01')"
 }
 ```
@@ -32,7 +32,7 @@ Route used to send an INSERT query to the backend.
     "status": "success",
     "code": 201,
     "data": {
-        "query": "INSERT INTO Patients
+        "query": "INSERT INTO Patients (name, dateOfBirth)
                   VALUES('Jane Doe', '1999-01-01')"
     }
 }
@@ -67,7 +67,7 @@ Route used to send a SELECT query to the backend.
     "status": "success",
     "code": 200,
     "data": {
-        "query": "SELECT name, dateOfBirth FROM Patients;",
+        "query": "SELECT * FROM Patients;",
         "result": [
           { patientId: 1, name: 'Jane Doe', dateOfBirth: '1990-01-01T00:00:00.000Z' },
           { patientId: 2, name: 'Bob Rob', dateOfBirth: '1985-05-12T00:00:00.000Z' }
