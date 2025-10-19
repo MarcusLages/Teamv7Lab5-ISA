@@ -14,6 +14,7 @@ Patients:
 ##### `POST: /query`
 Route used to send an INSERT query to the backend.
 - `query` param: Query that will be sent. Must be an INSERT query following SQL syntax.
+  - ATTENTION: Table, rows and database names are case sensitive.
 - Returns a dictionary with the confirmation if the query was executed, and also with the query executed back.
 - Returns a Forbidden Error (403) if invalid query type such as SELECT, UPDATE, DROP, etc.
 - Returns a Bad Request Error (402) if request is missing data or is an invalid SQL query.
@@ -56,6 +57,7 @@ Route used to send an INSERT query to the backend.
 ##### `GET: /query`
 Route used to send a SELECT query to the backend.
 - `query` param: Query that will be sent. Must be a SELECT query following SQL syntax.
+    - ATTENTION: Table, rows and database names are case sensitive.
 - Returns a dictionary with the confirmation if the query was executed, and also with the query executed back.
 - Returns a Forbidden Error (403) if invalid query type such as INSERT, UPDATE, DROP, etc.
 - Returns a Bad Request Error (402) if request is missing data or is an invalid SQL query.
